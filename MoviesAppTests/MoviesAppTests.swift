@@ -23,8 +23,8 @@ class MoviesAppTests: XCTestCase {
     
     func testMoviesViewModel(){
         
-        var model = MoviesViewModel(page: 1)
-        
+        let model = MoviesViewModel()
+            model.page = 1
         XCTAssertEqual(model.page, 1)
         
         let url = String(format: Constant.BASE_URL+"popular?api_key="+Constant.API_KEY+"&page=\(model.page)")
@@ -34,13 +34,19 @@ class MoviesAppTests: XCTestCase {
         XCTAssert(model.movies.count == 0)
         
         
-        var entities = MovieEntities(json: ["page":1, "total_results": 100, "total_pages":10, "results":[]])
-        var movieDetails = MovieDetails(json: ["id":123,"name":"Batman" ])
+
+        
+        let movieDetails = MovieDetails(json: ["id":123, "popularity":92.6, "poster_path":"",     "release_date":"2018-7-22", "title":"Rajesh koyi",
+            "runtime":120, "overview": "","genres": [],"languages":[]])
+        
+       
         model.movies.append(movieDetails)
         
         XCTAssert(model.movies.count > 0)
         
-       XCTAssertEqual(model.movies.first?.id, 123)
+        XCTAssertEqual(model.movies.first?.id, 123)
+        
+        XCTAssertEqual(model.movies.first?.title, "Rajesh koyi")
        
               
     }

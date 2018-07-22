@@ -20,24 +20,18 @@ class MovieDetailsViewController: UIViewController {
     @IBOutlet weak var releaseDateLabel: UILabel!
     @IBOutlet weak var gendersLabel: UILabel!
     @IBOutlet weak var overViewLabelHeight: NSLayoutConstraint!
-    
     @IBOutlet weak var mainScrollView: UIScrollView!
+   
     var id:Int?
-    var bUrl:String {
-        return String(format: Constant.BASE_URL + "\(111)?api_key=" + Constant.API_KEY)
-    }
-   // var baseUrl:String = "https://api.themoviedb.org/3/movie/8355?api_key=7a312711d0d45c9da658b9206f3851dd"
-    var movieDetails:MovieDetails?
-    var viewModel:MoviesViewModel?
+    var viewModel = MoviesViewModel()
     override func viewDidLoad() {
         super.viewDidLoad()
         updateUI()
         if let movieId = id {
-         viewModel = MoviesViewModel(id: movieId)
-         viewModel?.getMovieDetails(completion: { (movieDetails) in
-            self.movieDetails = movieDetails
+         viewModel.movieID = movieId
+         viewModel.getMovieDetails(completion: { (movieDetails) in
                      DispatchQueue.main.async {
-                         self.configureData()
+                         self.configureData(movieDetails)
                      }
 
          })
@@ -49,8 +43,7 @@ class MovieDetailsViewController: UIViewController {
         self.durationLabel.adjustsFontSizeToFitWidth = true
     }
     
-    func configureData(){
-        if let details = self.movieDetails {
+    func configureData(_ details:MovieDetails){
             self.movieImage.imageFromUrl(details.poster_path!)
             self.movieTitle.text = details.title
             self.popularityLabel.text = "Popularity: \(details.popularity ?? 0.0)"
@@ -59,7 +52,6 @@ class MovieDetailsViewController: UIViewController {
             self.overViewLabel.text = details.overview
             self.gendersLabel.text  = details.genresString
             self.languagesLabel.text = details.languagesString
-        }
     }
    
     @IBAction func showAction(_ sender: UIButton) {
