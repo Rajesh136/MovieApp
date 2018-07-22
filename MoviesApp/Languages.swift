@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Languages {
+class Language {
     var id:Int?
     var name:String?
     init(json:NSDictionary) {

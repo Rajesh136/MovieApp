@@ -20,11 +20,7 @@ class MovieEntities {
         self.total_results = json["total_results"] as? Int
         self.total_pages = json["total_pages"] as? Int
         if let results = json["results"] as? [NSDictionary] {
-           var jsonResults = [MovieDetails]()
-            for result in results {
-                jsonResults.append(MovieDetails(json: result))
-            }
-            self.results = jsonResults
+            self.results = results.map{MovieDetails(json:$0)}
         }
     }
 }

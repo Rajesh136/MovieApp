@@ -17,8 +17,8 @@ class MovieDetails {
         var title:String?
         var runtime:Int?
         var overview: String?
-        var genres:[Genres] = []
-        var languages:[Languages] = []
+        var genres:[Genre] = []
+        var languages:[Language] = []
     
         init(json:NSDictionary) {
             self.popularity = json["popularity"] as? Double
@@ -29,15 +29,11 @@ class MovieDetails {
             self.overview = json["overview"] as? String
             self.id = json["id"] as? Int
             if let genres = json["genres"] as? [NSDictionary]{
-                for genre in genres {
-                    self.genres.append(Genres(json: genre))
-                }
+                self.genres = genres.map{Genre(json:$0)}
             }
             
             if let languages = json["spoken_languages"] as? [NSDictionary]{
-                for lang in languages {
-                    self.languages.append(Languages(json: lang))
-                }
+                self.languages = languages.map{Language(json:$0)}
             }
         }
     
