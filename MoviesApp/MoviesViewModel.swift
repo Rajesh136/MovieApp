@@ -31,7 +31,7 @@ class MoviesViewModel {
         self.movieID = id
     }
  
-    
+    // get movies entities form server
     func getMovies(){
         MoviesListAPI.shared.getDataFromServer(urlString: self.movies_url) { (data) in
             DispatchQueue.global(qos: .background).async {
@@ -82,7 +82,7 @@ class MoviesViewModel {
     func movieAtIndexPath(_ index:Int)->MovieDetails{
         return movies[index]
     }
-    
+    // pagination
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height

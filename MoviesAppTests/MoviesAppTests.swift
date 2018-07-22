@@ -21,16 +21,27 @@ class MoviesAppTests: XCTestCase {
         super.tearDown()
     }
     
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
+    func testMoviesViewModel(){
+        
+        var model = MoviesViewModel(page: 1)
+        
+        XCTAssertEqual(model.page, 1)
+        
+        let url = String(format: Constant.BASE_URL+"popular?api_key="+Constant.API_KEY+"&page=\(model.page)")
+        
+        XCTAssertEqual(model.movies_url, url)
+        
+        XCTAssert(model.movies.count == 0)
+        
+        
+        var entities = MovieEntities(json: ["page":1, "total_results": 100, "total_pages":10, "results":[]])
+        var movieDetails = MovieDetails(json: ["id":123,"name":"Batman" ])
+        model.movies.append(movieDetails)
+        
+        XCTAssert(model.movies.count > 0)
+        
+       XCTAssertEqual(model.movies.first?.id, 123)
+       
+              
     }
-    
-    func testPerformanceExample() {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-    
 }

@@ -31,6 +31,21 @@ class MoviesAppUITests: XCTestCase {
     func testExample() {
         // Use recording to get started writing UI tests.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        
+        
+        let app = XCUIApplication()
+        let collectionViewsQuery = app.collectionViews
+        collectionViewsQuery.children(matching: .cell).element(boundBy: 4).otherElements.children(matching: .image).element.tap()
+        
+        let moviesListButton = app.navigationBars["MoviesApp.MovieDetailsView"].buttons["Movies List"]
+        moviesListButton.tap()
+        
+       collectionViewsQuery.element.swipeUp()
+        let collectionView = app.otherElements.containing(.navigationBar, identifier:"Movies List").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .collectionView).element
+        collectionView.swipeUp()
+        collectionView.swipeUp()
+        
+        
     }
     
 }
