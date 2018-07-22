@@ -28,7 +28,6 @@ class MoviesListAPI:APIManagerProtocol {
                 completion(nil)
                 return
             }
-            print(json,"====")
             completion(json)
         })
         task.resume()
