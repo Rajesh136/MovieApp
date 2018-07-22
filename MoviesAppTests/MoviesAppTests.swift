@@ -47,6 +47,8 @@ class MoviesAppTests: XCTestCase {
         XCTAssertEqual(model.movies.first?.id, 123)
         
         XCTAssertEqual(model.movies.first?.title, "Rajesh koyi")
+        
+        XCTAssertEqual(model.movieAtIndexPath(0).id, 123)
        
               
     }

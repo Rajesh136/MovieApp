@@ -48,4 +48,21 @@ class MoviesAppUITests: XCTestCase {
         
     }
     
+    func testMoviesCollectionViewController(){
+        
+        
+        let app = XCUIApplication()
+        app.otherElements.containing(.navigationBar, identifier:"Movies List").children(matching: .other).element.children(matching: .other).element.children(matching: .other).element.children(matching: .collectionView).element.swipeUp()
+        
+        let image = app.collectionViews.children(matching: .cell).element(boundBy: 13).otherElements.children(matching: .image).element
+        image.tap()
+        
+        let elementsQuery = app.scrollViews.otherElements
+        elementsQuery.buttons["Show full"].tap()
+        elementsQuery.buttons["Show less"].tap()
+        app.navigationBars["MoviesApp.MovieDetailsView"].buttons["Movies List"].tap()
+        image.swipeUp()
+        
+    }
+    
 }
