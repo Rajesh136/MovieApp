@@ -40,11 +40,22 @@ class MoviesViewModel {
                 let entities = MovieEntities(json: json as! NSDictionary)
                 self.total_Page = entities.total_results!
                     if let results = entities.results {
-                        self.movies.append(contentsOf:results)
+                        //self.movies.append(contentsOf:results)
+                        
+                        for  res in results {
+                            DispatchQueue.main.async {
+                                self.collectionView?.performBatchUpdates({
+                                    let indexPath = IndexPath(row: self.movies.count, section: 0)
+                                    self.movies.append(res)
+                                    self.collectionView?.insertItems(at: [indexPath])
+                                }, completion: nil)
+                            }
+                            
+                        }
                     }
-                DispatchQueue.main.async {
-                     self.collectionView?.reloadData()
-                }
+               // DispatchQueue.main.async {
+                    // self.collectionView?.reloadData()
+               // }
                
             }
         }
@@ -72,7 +83,6 @@ class MoviesViewModel {
         return movies[index]
     }
     
-    //
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
